@@ -1,4 +1,7 @@
 <?php
+
+define('DS', DIRECTORY_SEPARATOR);
+
 echo '#6. Создать страницу, на которой можно загрузить несколько фотографий в галерею. 
 Все загруженные фото должны помещаться в папку gallery и выводиться на странице в виде таблицы.</p>';
 
@@ -7,8 +10,8 @@ echo '<hr>';
 
 include "Home work 17.10.php";
 // Пути загрузки файлов
-$path = 'C:\Users\slv19\PhpstormProjects\Lern PHP\functions_forms_tasks\6\Galery\img';
-$tmp_path = 'C:\Users\slv19\PhpstormProjects\Lern PHP\functions_forms_tasks\6\Galery\img';
+$path = 'C:' . DS . 'Users' . DS . 'slv19' . DS . 'PhpstormProjects' . DS . 'Lern PHP' . DS . 'functions_forms_tasks' . DS . '6' . DS . 'Galery' . DS . 'img';
+$tmp_path = 'C:' . DS . 'Users' . DS . 'slv19' . DS . 'PhpstormProjects' . DS . 'Lern PHP' . DS . 'functions_forms_tasks' . DS . '6' . DS . 'Galery' . DS . 'img';
 // Массив допустимых значений типа файла
 $types = array('image/gif', 'image/png', 'image/jpeg', 'image/jpg');
 
@@ -30,9 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo 'Что-то пошло не так';
     else
 
-        $arr = glob('C:\Users\slv19\PhpstormProjects\Lern PHP\functions_forms_tasks\6\Galery\*.*');
+        $arr = glob('C:' . DS . 'Users' . DS . 'slv19' . DS . 'PhpstormProjects' . DS . 'Lern PHP' . DS . 'functions_forms_tasks' . DS . '6' . DS . 'Galery' . DS . 'img' . DS . '*.*');
     foreach ($arr as $v) {
-        echo ' <tb>  <img  src="' . $v . '" width="200" height="200" /> </tb> ';
+        $imgWebPath = 'http://localhost/images'; // прописать тут путь к картинкам
+        $imgFile = basename($v);
+        echo ' <tb>  <img  src="' . $imgWebPath . '/' . $imgFile . '" width="200" height="200" /> </tb> ';
     }
 
 
