@@ -2,7 +2,7 @@
 echo '#8. Создать гостевую книгу, где любой человек может оставить комментарий в текстовом поле и добавить его. 
 Все добавленные комментарии выводятся над текстовым полем. 
 Реализовать проверку на наличие в тексте запрещенных слов, матов. При наличии таких слов - выводить сообщение "Некорректный комментарий".
-Реализовать удаление из комментария всех тегов, кроме тега &lt;b&gt;.</p>' . ' смог реализовать удаление и редактирование коментов, и не грузится каптча(((';
+Реализовать удаление из комментария всех тегов, кроме тега &lt;b&gt;.</p>' ;
 echo '<hr>';
 
 include "functions_forms.php";
@@ -13,20 +13,24 @@ $counter= countVisit();
 $securityNumber = rand(1000, 9999);
 $editMode = null;
 
-if (requestGet('action')== 'delete' && requestGet('id')){
-    if($_POST) {
-        die('delete' . requestGet('id'));
-        $result = deleteComment(requestGet('id'));
-        $message = $result === false ? 'Error Deleting' : 'Deleted';
-        //redirect('http://localhost:63342/Lern%20PHP/functions_forms_tasks/8/8.php?_ijt=msr1c2g0934cbol059f2d7gbqu');
-    }
+if (requestGet('action')== 'delete' && $id= requestGet('id')){
+        // die('delete' . requestGet('id'));
+        $comments = deleteComment($id);
+        $message = $comments=== false ? 'Error Deleting' : 'Deleted';
+    //if(empty($comments))
+      //  return redirect('http://localhost:63342/Lern%20PHP/functions_forms_tasks/8/8.php?');
+     //   redirect('http://localhost:63342/Lern%20PHP/functions_forms_tasks/8/8.php?');
+
 }
 
 if (requestGet('action') == 'edit' && requestGet('id')) {
-    $editMode = requestGet('id');
+    $editMode = requestGet(id);
+    if($_POST) {
+        die ('$_POST');
+        //$editMode = requestGet('id');
 
-    if ($_POST) {
-        die('saving message');
+        //$comments = editComment($editMode);
+    }
     }
 
     // die('edit ' .  requestGet('id'));
@@ -34,7 +38,7 @@ if (requestGet('action') == 'edit' && requestGet('id')) {
     // $message = $result === false ? 'Error deleting' : 'Deleted';
 
     // redirect('/form?message=' . $message);
-}
+
 
 if ($_POST){
     if(formIsValid()){

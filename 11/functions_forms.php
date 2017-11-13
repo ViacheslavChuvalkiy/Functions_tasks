@@ -10,25 +10,38 @@ function requestPost($key)
 {
     return getValue($_POST, $key);
 }
-function my_ucfirst($string, $e ='utf-8') {
-    if (function_exists('mb_strtoupper') && function_exists('mb_substr') && !empty($string)) {
-        $string = mb_strtolower($string, $e);
-        $upper = mb_strtoupper($string, $e);
-        preg_match('#(.)#us', $upper, $matches);
-        $string = $matches[1] . mb_substr($string, 1, mb_strlen($string, $e), $e);
-    } else {
-        $string = ucfirst($string);
-    }
-    return $string;
+
+
+
+function changeWords($str)
+{
+    //echo '<hr>';
+    $str = explode(' ', $str);
+    $str = array_slice($str, 2);
+    //echo '<hr>';
+   // print_r($str);
+    array_unshift($str, 'A');
+    $str = '. ' . implode($str, ' ');
+    //echo '<hr>';
+    //echo  'Новая строка   ';
+    //print_r($str);
+    file_put_contents('newString.txt', $str,   FILE_APPEND);
+    return $str;
+
 }
 
+function mapWords($text)
+{
+    $str = explode('.', $text);
+   // print_r($str);
+    $newText= array_map('changeWords' , $str);
 
-function changeWords() {
-    $text=requestPost('message');
-    $text= my_ucfirst($text);
-    $comments = ucwords($text);
+
+
+    $comments = file_get_contents('newString.txt');
+    echo '<hr>';
     return $comments;
-    }
+}
 
 
 function redirect($to)

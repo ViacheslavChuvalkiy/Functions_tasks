@@ -9,7 +9,7 @@ $imageColor = null;
 $font = null;
 $image = null;
 $securityNumber = $_GET['number'];
-$font = __DIR__ . 'SpicyRice.ttf';
+$font = __DIR__ . '/SpicyRice.ttf';
 $image = imagecreate($imgX, $imgY);
 // colors allocations - text, noise, bg
 $textColor = imagecolorallocate($image, 0, 0, 0);

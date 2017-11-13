@@ -1,17 +1,89 @@
 <?php
 define('COMMENTS_STORAGE','comments.txt');
 
-function deleteComment(){
-    $deleteComment=requestGet['id'];
+
+
+function deleteComment($id){
+     $comments= loadComments();
+     foreach ($comments as  &$comment){
+        if($comment['id']== $id){
+            echo 'coment= ' . '<br>';
+            var_dump($comment);
+            echo '<br>' . ' comments =  ' . '<br>';
+            var_dump($comments);
+            echo '<br>';
+
+      unset ($comment['id'],$comment['name'],$comment['email'],$comment['message'],$comment['created']);
+            echo'<br>' . 'coment= ' . '<br>';
+            var_dump($comment);
+              echo '<hr>';
+            var_dump($comments);
+           $comments = serialize($comments);
+
+
+                       echo '<hr>';
+       // $comments = array_diff_key( $comments, array(''));
+       return file_put_contents(
+       COMMENTS_STORAGE,
+      $comments);
+        }
+}};
+
+
+function editComment($editMode){
     $comments= loadComments();
-     foreach ($comments as $comment){
-        if($comment === $deleteComment){
-           unset($comments['id']);}     }
-     return file_put_contents(
+    foreach ($comments as  &$comment){
+        if($comment['id']== $editMode){
+            echo 'coment= ' . '<br>';
+            var_dump($comment);
+            echo '<br>' . ' comments =  ' . '<br>';
+            var_dump($comments);
+            echo '<br>';
+
+         $comments= array_replace( $comment['message'],$comments['message']);
+            echo'<br>' . 'coment= ' . '<br>';
+            var_dump($comment);
+            echo '<hr>';
+            var_dump($comments);
+            $comments = serialize($comments);
+
+
+            echo '<hr>';
+            // $comments = array_diff_key( $comments, array(''));
+         //   return file_put_contents(
+           //     COMMENTS_STORAGE,
+             //   $comments);
+        }
+    }};
+
+function save(array $comment)
+{
+    $comments= loadComments();
+    $comments[]= $comment;
+    $comments = serialize($comments);
+
+    return file_put_contents(
         COMMENTS_STORAGE,
         $comments);
+};
 
-}
+
+function loadComments(){
+    $contents= @file_get_contents(COMMENTS_STORAGE);
+    if($contents===false){
+        return[];
+    }
+    if(empty($contents)){
+        return [];
+    }
+
+    $comments = @unserialize($contents);
+    if($comments === false){
+       // return [];
+          die('System error');
+    }
+    return $comments;
+};
 
 
 function removeSwearing(&$comment){
@@ -83,35 +155,6 @@ function getValue(array $array,$key){
 return null;
   };
 
-
-function save(array $comment)
-{
-    $comments= loadComments();
-    $comments[]= $comment;
-    $comments = serialize($comments);
-
-    return file_put_contents(
-        COMMENTS_STORAGE,
-        $comments);
-};
-
-
-function loadComments(){
-    $contents= @file_get_contents(COMMENTS_STORAGE);
-    if($contents===false){
-        return[];
-    }
-
-    if(empty($contents)){
-        return [];
-    }
-
-    $comments = @unserialize($contents);
-    if($comments=== false){
-        die('System error');
-    }
-    return $comments;
-};
 
 function formIsValid()
 {

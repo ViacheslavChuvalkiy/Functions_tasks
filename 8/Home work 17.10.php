@@ -29,8 +29,8 @@ You visited this page: <?=$counter?> time(s).
 
 <h2>Comments</h2>
 <?php foreach ($comments as $comment) : ?>
-    <div class='comment' id='comment_<?=$comment['id']?>'>
-        <h3><?=$comment['name']?></h3>
+    <div class='comment' id='comment_<?=@$comment['id']?>'>
+        <h3><?=@$comment['name']?></h3>
         <a href="?action=delete&amp;id=<?=$comment['id']?>">Delete</a> |
         <a href="?action=edit&amp;id=<?=$comment['id']?>#comment_<?=$comment['id']?>">Edit</a>
         <br>
@@ -40,9 +40,9 @@ You visited this page: <?=$counter?> time(s).
                 <input type="submit" value="Submit"/>
             </form>
         <?php else : ?>
-            <?=$comment['message']?>
+            <?=@$comment['message']?>
         <?php endif ?>
-        <i><?=$comment['created'] ?></i>
+        <i><?=@$comment['created'] ?></i>
         <br>
     </div>
 
